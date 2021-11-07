@@ -29,7 +29,7 @@ let remindersController = {
       completed: false,
     };
     database.cindy.reminders.push(reminder);
-    res.redirect("/reminders");
+    res.redirect("/reminder");
   },
 
   edit: (req, res) => {
@@ -45,21 +45,17 @@ let remindersController = {
     let searchResult = database.cindy.reminders.find(function (reminder) {
       return reminder.id == reminderToFind;
     });
-    let reminderStatus = req.body.completed
-    if (reminderStatus == "true") {
-      searchResult.completed = true;
-    } else {
-      searchResult.completed = false; 
-    }
+    searchResult.completed = req.body.completed === "true";
+    console.log(searchResult.completed)
     searchResult.title = req.body.title;
-    searchResult.description = req.body.description
-    res.redirect("/reminders");    
+    searchResult.description = req.body.description;
+    res.redirect("/reminder");
   },
 
   delete: (req, res) => {
     let reminderToFind = req.params.id;
     database.cindy.reminders.splice(reminderToFind - 1, 1);
-    res.redirect("/reminders");  
+    res.redirect("/reminder");
   },
 };
 
