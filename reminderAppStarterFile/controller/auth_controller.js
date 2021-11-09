@@ -10,10 +10,12 @@ let authController = {
     res.render("auth/register");
   },
 
-  // loginSubmit: passport.authenticate("local", {
-  //   successRedirect: "/reminder",
-  //   failureRedirect: "/login"
-  // }),
+  loginSubmit: (req, res, next) => {
+    passport.authenticate("local", {
+      successRedirect: "/reminder",
+      failureRedirect: "/auth/login"
+    })(req, res, next) 
+  },
 
   registerSubmit: (req, res) => {
     let register = {
@@ -23,7 +25,12 @@ let authController = {
       password: req.body.password,
     };
     database.push(register); //push the new login (id, username, email and password to the logindatabase under/modles/userModel)
-    res.redirect("/login"); //after user register to a new account, direct them to the log in page
+    res.redirect("/auth/login"); //after user register to a new account, direct them to the log in page
+  },
+
+  logout: (req, res) =>{
+    req.logout()
+    res.redirect("/auth/login")
   },
 };
 

@@ -1,19 +1,20 @@
-// const express = require("express")
-// const router = express.Router()
-// const reminderController = require("../controller/reminder_controller");
+const express = require("express");
+const router = express.Router();
+const reminderController = require("../controller/reminder_controller");
+const { ensureAuthenticated } = require("../middleware/checkAuth");
 
-// router.get("/reminder", reminderController.list);
+router.get("/", ensureAuthenticated, reminderController.list);
 
-// router.get("/reminder/new", reminderController.new);
+router.get("/new", reminderController.new);
 
-// router.get("/reminder/:id", reminderController.listOne);
+router.get("/:id", reminderController.listOne);
 
-// router.get("/reminder/:id/edit", reminderController.edit);
+router.get("/:id/edit", reminderController.edit);
 
-// router.post("/reminder/", reminderController.create);
+router.post("/", reminderController.create);
 
-// router.post("/reminder/update/:id", reminderController.update);
+router.post("/update/:id", reminderController.update);
 
-// router.post("/reminder/delete/:id", reminderController.delete);
+router.post("/delete/:id", reminderController.delete);
 
-// module.exports = router;
+module.exports = router;
