@@ -28,6 +28,14 @@ let authController = {
     res.redirect("/auth/login"); //after user register to a new account, direct them to the log in page
   },
 
+  gitLogin: (req, res, next) =>{
+    passport.authenticate("github", { scope: [ 'user:email' ] })(req, res, next)
+  },
+
+  gitBack: (req, res, next) => {
+    passport.authenticate("github", { failureRedirect: "auth/login" })(req, res, next)
+  },
+
   logout: (req, res) =>{
     req.logout()
     res.redirect("/auth/login")
