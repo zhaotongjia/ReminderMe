@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+require("dotenv").config();
 const ejsLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 
@@ -33,6 +34,9 @@ app.use("/reminder", reminderRoute);
 
 const authRoute = require("./routes/authRoute");
 app.use("/auth", authRoute);
+
+const homeRoute = require("./routes/homeRoute")
+app.use("/", homeRoute)
 
 app.listen(3001, function () {
   console.log(

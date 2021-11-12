@@ -13,8 +13,8 @@ let authController = {
   loginSubmit: (req, res, next) => {
     passport.authenticate("local", {
       successRedirect: "/reminder",
-      failureRedirect: "/auth/login"
-    })(req, res, next) 
+      failureRedirect: "/auth/login",
+    })(req, res, next);
   },
 
   registerSubmit: (req, res) => {
@@ -28,17 +28,24 @@ let authController = {
     res.redirect("/auth/login"); //after user register to a new account, direct them to the log in page
   },
 
-  gitLogin: (req, res, next) =>{
-    passport.authenticate("github", { scope: [ 'user:email' ] })(req, res, next)
+  gitLogin: (req, res, next) => {
+    passport.authenticate("github", { scope: ["user:email"] })(req, res, next);
   },
 
   gitBack: (req, res, next) => {
-    passport.authenticate("github", { failureRedirect: "auth/login" })(req, res, next)
+    passport.authenticate("github", {
+      failureRedirect: "auth/login",
+      successRedirect: "/reminder"
+    })(req, res, next);
   },
 
-  logout: (req, res) =>{
-    req.logout()
-    res.redirect("/auth/login")
+  unsplashpic: () => {
+    const clientID = process.env.UNSPLASH_ACCESS_ID;
+  },
+
+  logout: (req, res) => {
+    req.logout();
+    res.redirect("/auth/login");
   },
 };
 

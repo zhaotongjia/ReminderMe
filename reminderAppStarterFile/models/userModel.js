@@ -4,6 +4,7 @@ const loginDatabase = [
     name: "Jimmy Smith",
     email: "jimmy123@gmail.com",
     password: "jimmy123!",
+    role: "admin",
   },
   {
     id: 2,
@@ -33,6 +34,20 @@ const userModel = {
       return user;
     }
     throw new Error(`Couldn't find user with id: ${id}`);
+  },
+  CheckGithubId: (profile) => {
+    const user = loginDatabase.find((user) => user.id === profile.id);
+    if (user) {
+      return user;
+    }
+    let newuser = {
+      id: profile.id,
+      name: profile.name,
+      email: profile.email,
+      pic: profile.photos[0].value,
+    };
+    loginDatabase.push(newuser);
+    return newuser;
   },
 };
 

@@ -1,0 +1,19 @@
+<div class="homecontainer">
+    <div class="pic">
+        <img src="" alt="Github">
+        <a href="" class="btn btn-secondary">Upload Photo</a>
+    </div>
+    <div class="dashboard">
+        <h1 class="page-header">Dashboard</h1>
+        <h2>Welcome <%= user[0].name %></h2>
+        <% if (!user[0].role == "") { %>
+         <p>Current Active Session:</p>
+         <p>SessionId: <%= user[1] %> </p>
+         <p>UserID: <%= user[0].id %></p>
+         <a href="/auth/logout" class="btn btn-secondary">Revoke Session</a>
+        <% } else { %>
+        <a href="/auth/logout" class="btn btn-secondary">Logout</a>
+        <% } %>
+    </div>  
+</div>
+  

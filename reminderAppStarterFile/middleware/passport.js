@@ -17,6 +17,18 @@ const localLogin = new LocalStrategy(
   }
 );
 
+const gitHubLogic = new GitHubStrategy(
+  {
+    clientID: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET,
+    callbackURL: "http://localhost:3001/auth/github/callback",
+  },
+  (accessToken, refreshToken, profile, done) => {
+    let user = userController.getUserByGitHubIdOrCreate(profile); 
+    return done(null, user);
+  }
+);
+
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
@@ -30,20 +42,5 @@ passport.deserializeUser(function (id, done) {
   }
 });
 
-let GITHUB_CLIENT_ID = "--insert-github-client-id-here--";
-let GITHUB_CLIENT_SECRET = "--insert-github-client-secret-here--";
 
-passport.use(new GitHubStrategy({
-  clientID: GITHUB_CLIENT_ID,
-  clientSecret: GITHUB_CLIENT_SECRET,
-  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
-  },
-  (accessToken, refreshToken, profile, done) => {
-    process.nextTick( () => {
-      return done(null, profile)
-    })
-}
-
-))
-
-module.exports = passport.use(localLogin);
+module.exports = passport.use(gitHubLogic).use(localLogin);

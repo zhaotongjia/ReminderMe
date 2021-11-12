@@ -156,6 +156,7 @@ footer.footer {
   text-align: center;
 }
 
-.btn{
-  margin-top: 10px;
+.homecontainer{
+  display:grid;
+  grid-template-columns: 1fr 2fr
 }
