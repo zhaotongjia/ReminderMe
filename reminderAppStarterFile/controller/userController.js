@@ -23,7 +23,6 @@ function isUserValid(user, password) {
 }
 
 const getUserByGitHubIdOrCreate = (profile) => {
-  console.log(profile);
   let user = userModel.CheckGithubId(profile);
   if (user) {
     return user;

@@ -1,16 +1,23 @@
 <div class="homecontainer">
     <div class="pic">
-        <img src="" alt="Github">
-        <a href="" class="btn btn-secondary">Upload Photo</a>
+        <img id="userpic" src="<%= user[0].pic %>" alt="UserPic">
+        <input type="file" name="file"  id="file">
+        <script src="/script.js"></script>
     </div>
     <div class="dashboard">
         <h1 class="page-header">Dashboard</h1>
         <h2>Welcome <%= user[0].name %></h2>
         <% if (!user[0].role == "") { %>
          <p>Current Active Session:</p>
-         <p>SessionId: <%= user[1] %> </p>
-         <p>UserID: <%= user[0].id %></p>
-         <a href="/auth/logout" class="btn btn-secondary">Revoke Session</a>
+         <% for( let e in user[1] ) { %>
+            <form action="/auth/revoke" method="POST">
+                <p>SessionID: <%= e %> </p>
+                <input type="hidden" name="sessionID" value="<%= e %>" >
+                <p>UserID: <%= user[1][e].passport.user  %></p>
+                <button type="submit" class="btn btn-secondary">Revoke Session</button>
+                <p></p>
+            </form>
+         <% } %>
         <% } else { %>
         <a href="/auth/logout" class="btn btn-secondary">Logout</a>
         <% } %>

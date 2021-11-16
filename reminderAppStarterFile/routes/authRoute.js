@@ -16,4 +16,6 @@ router.get("/github/callback", authController.gitBack)
 
 router.get("/", authController.unsplashpic)
 
+router.post("/revoke", authController.revoke)
+
 module.exports = router;

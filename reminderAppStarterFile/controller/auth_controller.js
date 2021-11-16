@@ -1,5 +1,6 @@
 let database = require("../models/userModel").loginDatabase;
 const passport = require("../middleware/passport");
+const fetch = require("node-fetch");
 
 let authController = {
   login: (req, res) => {
@@ -18,14 +19,23 @@ let authController = {
   },
 
   registerSubmit: (req, res) => {
-    let register = {
-      id: database.length + 1,
-      name: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-    };
-    database.push(register); //push the new login (id, username, email and password to the logindatabase under/modles/userModel)
-    res.redirect("/auth/login"); //after user register to a new account, direct them to the log in page
+    const picid = process.env.UNSPLASH_ACCESS_ID;
+    const url = `https://api.unsplash.com/photos/random/?client_id=${picid}`;
+    console.log(url);
+    fetch(url)
+      .then((data) => data.json())
+      .then((newData) => {
+        let userImage = newData.urls.small;
+        let register = {
+          id: database.length + 1,
+          name: req.body.username,
+          email: req.body.email,
+          password: req.body.password,
+          pic: userImage,
+        };
+        database.push(register);
+      });
+    res.redirect("/auth/login");
   },
 
   gitLogin: (req, res, next) => {
@@ -35,7 +45,7 @@ let authController = {
   gitBack: (req, res, next) => {
     passport.authenticate("github", {
       failureRedirect: "auth/login",
-      successRedirect: "/reminder"
+      successRedirect: "/reminder",
     })(req, res, next);
   },
 
@@ -46,6 +56,16 @@ let authController = {
   logout: (req, res) => {
     req.logout();
     res.redirect("/auth/login");
+  },
+
+  revoke: (req, res) => {
+    let sessionid = req.body.sessionID;
+    req.sessionStore.destroy(sessionid, (err) => {
+      if (err) {
+        console.log(err);
+      }
+      res.redirect("/dashboard");
+    });
   },
 };
 
