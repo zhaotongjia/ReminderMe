@@ -3,7 +3,7 @@ const imgur = require("imgur");
 const router = express.Router();
 const { ensureAuthenticated } = require("../middleware/checkAuth");
 const fs = require("fs");
-const { isRedirect } = require("node-fetch");
+// const { isRedirect } = require("node-fetch");
 let database = require("../models/userModel").loginDatabase;
 
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
@@ -20,15 +20,15 @@ router.post("/uploads/", async (req, res) => {
   const file = req.files[0];
   try {
     const url = await imgur.uploadFile(`./uploads/${file.filename}`);
-    const piclink = url.link.split(".").slice(0,-1).join(".") + "m.jpeg"
-    console.log(piclink);
-    database.forEach( (e) => {
-      if ((req.user.id) === e.id) {
-        e.pic = piclink
+    const piclink = url.link.split(".").slice(0, -1).join(".") + "m.jpeg";
+    database.forEach((e) => {
+      if (req.user.id === e.id) {
+        e.pic = piclink;
       }
-    })
+    });
     fs.unlinkSync(`./uploads/${file.filename}`);
-    res.redirect("/dashboard")
+    // res.redirect("/dashboard")
+    res.json("Pic upload");
   } catch (error) {
     console.log("error", error);
   }
