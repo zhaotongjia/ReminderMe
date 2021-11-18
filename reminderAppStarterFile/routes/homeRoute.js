@@ -28,7 +28,7 @@ router.post("/uploads/", async (req, res) => {
     });
     fs.unlinkSync(`./uploads/${file.filename}`);
     // res.redirect("/dashboard")
-    res.json("Pic upload");
+    res.json({ msg: "Pic upload" });
   } catch (error) {
     console.log("error", error);
   }
