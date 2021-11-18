@@ -9,3 +9,26 @@ datasource db {
   provider = "sqlite"
   url      = "file:./dev.db"
 }
+
+model User {
+  id       Int        @id
+  name     String
+  email    String     @unique
+  password String
+  role     Role       @default(User)
+  pic      String
+  reminder Reminder[]
+
+  @@map(name: "loginDatabase")
+}
+
+model Reminder {
+  id          Int     @id
+  user        User    @relation(fields: [userID], references: [id])
+  userID      Int
+  title       String
+  description String
+  complete    Boolean @default(false)
+
+  @@map(name: "Database")
+}
