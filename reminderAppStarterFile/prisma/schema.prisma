@@ -14,8 +14,8 @@ model User {
   id       Int        @id
   name     String
   email    String     @unique
-  password String
-  role     Role       @default(User)
+  password String?
+  // role     Role      @default(USER)
   pic      String
   reminder Reminder[]
 
