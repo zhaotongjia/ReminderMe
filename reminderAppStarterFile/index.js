@@ -6,7 +6,7 @@ const ejsLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const multer = require("multer");
 const imgur = require("imgur");
-import { PrismaClient } from "@prisma/client"
+const { PrismaClient } = require("@prisma/client")
 const prisma = new PrismaClient()
 
 const storage = multer.diskStorage({

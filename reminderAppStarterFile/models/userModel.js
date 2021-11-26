@@ -24,20 +24,21 @@ const loginDatabase = [
 ];
 
 const userModel = {
-  findOne: (email) => {
-    const user = loginDatabase.find((user) => user.email === email);
-    if (user) {
-      return user;
-    }
-    throw new Error(`Couldn't find user with email: ${email}`);
-  },
-  findById: (id) => {
-    const user = loginDatabase.find((user) => user.id === id);
-    if (user) {
-      return user;
-    }
-    throw new Error(`Couldn't find user with id: ${id}`);
-  },
+  // findOne: (email) => {
+  //   const user = loginDatabase.find((user) => user.email === email);
+  //   if (user) {
+  //     return user;
+  //   }
+  //   throw new Error(`Couldn't find user with email: ${email}`);
+  // },
+
+  // findById: (id) => {
+  //   const user = loginDatabase.find((user) => user.id === id);
+  //   if (user) {
+  //     return user;
+  //   }
+  //   throw new Error(`Couldn't find user with id: ${id}`);
+  // },
   CheckGithubId: (profile) => {
     const user = loginDatabase.find((user) => user.id === profile.id);
     if (user) {

@@ -10,16 +10,17 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+
 model User {
   id       Int        @id
   name     String
-  email    String     @unique
+  email    String?     @unique
   password String?
-  // role     Role      @default(USER)
+  role     String      @default("user")
   pic      String
-  reminder Reminder[]
+  reminders Reminder[]
 
-  @@map(name: "loginDatabase")
+  @@map(name: "users")
 }
 
 model Reminder {
@@ -30,5 +31,5 @@ model Reminder {
   description String
   complete    Boolean @default(false)
 
-  @@map(name: "Database")
+  @@map(name: "reminders")
 }
